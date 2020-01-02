@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-import Header from './components/header'
 import TodoInput from './components/todoInput'
 import TodoItem from './components/todoItem'
 
@@ -39,8 +38,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="todo-wrapper">
-          <Header />
-          <TodoInput todoText="" addTodo={this.addTodo} />
+          <h2>React Todos</h2>
           <ul>
             {
               this.state.todos.map((todo) => {
