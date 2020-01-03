@@ -18,7 +18,7 @@ export default class TodoItem extends React.Component {
         );
     }*/
     render() {
-        const {title} = this.props
+        const {title,handleDelete} = this.props
         return (
             <li className="list-group-item text-capitalize d-flex justify-content-between my-2">
                 <h6>{title}</h6>
@@ -26,7 +26,7 @@ export default class TodoItem extends React.Component {
                     <span className="mx-2 text-success">
                         <i className="fas fa-pen"></i>
                     </span>
-                    <span className="mx-2 text-danger">
+                    <span className="mx-2 text-danger" onClick={handleDelete}>
                         <i className="fas fa-trash"></i>
                     </span>
                 </div>
