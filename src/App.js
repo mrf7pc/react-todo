@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import TodoInput from './components/todoInput'
-import TodoItem from './components/todoItem'
+import TodoList from './components/todoList'
 import "bootstrap/dist/css/bootstrap.min.css"
 import uuid from 'uuid'
 
@@ -36,14 +36,50 @@ class App extends Component {
     })
   }*/
 
+  state={
+    todos:[],
+    id:uuid(),
+    item:'',
+    editItem:false
+  }
+
+  handleChange = (e)=> { //no binding?
+    this.setState({
+      item:e.target.value
+    })
+  }
+
+  addTodo = (e)=> {
+    e.preventDefault();
+    const newItem = {
+      id:this.state.id,
+      title:this.state.item
+    }
+
+    const updatedItems = [...this.state.todos, newItem] //takes all elements in todos, adds newItem, and puts it into updated list
+
+    this.setState({
+      todos:updatedItems,
+      item:'',
+      id:uuid(),
+      editItem:false
+    })
+  }
+
+  clearList = ()=> {
+    this.setState({
+      todos:[]
+    })
+  }
+
   render() {
     return (
       <div className="container">
         <div className="row">
           <div className="col-10 mx-auto col-md-8 mt-4">
             <h3 className="text-capitalize text-center">Todo Input</h3>
-            <TodoInput/>
-            <TodoItem/>
+            <TodoInput item={this.state.item} handleChange={this.handleChange} addTodo={this.addTodo}/>
+            <TodoList todos={this.state.todos} clearList={this.clearList}/>
           </div>
         </div>
       </div>
