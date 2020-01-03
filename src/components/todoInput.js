@@ -2,7 +2,7 @@ import React from 'react';
 import './todoInput.css';
 
 export default class TodoInput extends React.Component {
-    constructor(props) {
+    /*constructor(props) {
         super(props)
         this.state = {value: ''};
         this.handleChange=this.handleChange.bind(this);
@@ -26,6 +26,23 @@ export default class TodoInput extends React.Component {
                 <input type="text" value={this.state.value} onChange={this.handleChange} />
                 <button className="btn btn-primary" onClick={() => this.addTodo(this.state.value)}>Submit</button>
             </div>
+        );
+    }*/
+    render() {
+        return (
+            <div className="card card-body my-3">
+                <form>
+                    <div className="input-group">
+                        <div className="input-group-prepend">
+                            <div className="input-group-text bg-primary text-white">
+                                <i className="fas fa-book"/>
+                            </div>
+                        </div>
+                        <input type="text" className="form-control text-capitalize" placeholder="Enter a todo list item"/>
+                    </div>
+                    <button type="submit" className="btn btn-block btn-primary mt-3">Add Item</button>
+                </form>
+            </div>  
         );
     }
 }
