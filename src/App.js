@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import './App.css';
 import TodoInput from './components/todoInput'
 import TodoItem from './components/todoItem'
+import "bootstrap/dist/css/bootstrap.min.css"
+import uuid from 'uuid'
 
 class App extends Component {
-  constructor(props) {
+  /*constructor(props) {
     super(props);
 
     this.state = {
@@ -32,13 +34,28 @@ class App extends Component {
     this.setState({
       todos: this.state.todos.filter((todo, index) => todo.id != id)
     })
-  }
+  }*/
 
   render() {
+    return (
+      <div className="container">
+        <div className="row">
+          <div className="col-10 mx-auto col-md-8 mt-4">
+            <h3 className="text-capitalize text-center">Todo Input</h3>
+            <TodoInput/>
+            <TodoItem/>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  /*render() {
     return (
       <div className="App">
         <div className="todo-wrapper">
           <h2>React Todos</h2>
+          <TodoInput/>
           <ul>
             {
               this.state.todos.map((todo) => {
@@ -49,7 +66,7 @@ class App extends Component {
         </div>
       </div>
     );
-  }
+  }*/
 }
 
 export default App;
