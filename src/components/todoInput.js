@@ -29,7 +29,7 @@ export default class TodoInput extends React.Component {
         );
     }*/
     render() {
-        const {item,handleChange,addTodo} = this.props
+        const {item,handleChange,addTodo,editItem} = this.props
         return (
             <div className="card card-body my-3">
                 <form onSubmit={addTodo}> 
@@ -41,7 +41,7 @@ export default class TodoInput extends React.Component {
                         </div>
                         <input type="text" className="form-control text-capitalize" placeholder="Enter a todo list item" value={item} onChange={handleChange}/>
                     </div>
-                    <button type="submit" className="btn btn-block btn-primary mt-3">Add Item</button>
+                    <button type="submit" className={editItem ? "btn btn-block btn-success mt-3" : "btn btn-block btn-primary mt-3"}>{editItem ? "Edit Item" : "Add Item"}</button>
                 </form>
             </div>  
         );

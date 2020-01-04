@@ -73,9 +73,20 @@ class App extends Component {
   }
 
   handleDelete = (id)=> {
-    const filteredItems=this.state.todos.filter(item => item.id != id)
+    const filteredItems=this.state.todos.filter(item => item.id !== id)
     this.setState({
       todos:filteredItems
+    })
+  }
+
+  handleEdit = (id)=> {
+    const filteredItems=this.state.todos.filter(item => item.id !== id)
+    const selectedItem=this.state.todos.find(item => item.id === id)
+    this.setState({
+      todos:filteredItems,
+      item:selectedItem.title,
+      editItem:true,
+      id:id
     })
   }
 
@@ -85,8 +96,8 @@ class App extends Component {
         <div className="row">
           <div className="col-10 mx-auto col-md-8 mt-4">
             <h3 className="text-capitalize text-center">Todo Input</h3>
-            <TodoInput item={this.state.item} handleChange={this.handleChange} addTodo={this.addTodo}/>
-            <TodoList todos={this.state.todos} clearList={this.clearList} handleDelete={this.handleDelete}/>
+            <TodoInput item={this.state.item} handleChange={this.handleChange} addTodo={this.addTodo} editItem={this.state.editItem}/>
+            <TodoList todos={this.state.todos} clearList={this.clearList} handleDelete={this.handleDelete} handleEdit={this.handleEdit}/>
           </div>
         </div>
       </div>
