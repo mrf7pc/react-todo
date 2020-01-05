@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component }from 'react';
 import './App.css';
 import TodoInput from './components/todoInput'
 import TodoList from './components/todoList'
 import "bootstrap/dist/css/bootstrap.min.css"
 import uuid from 'uuid'
+import update from 'immutability-helper'
 
 class App extends Component {
   /*constructor(props) {
@@ -19,28 +20,13 @@ class App extends Component {
     }
     this.addTodo = this.addTodo.bind(this);
     this.removeTodo = this.removeTodo.bind(this);
-  }
-
-  addTodo(todoText) {
-    let todos = this.state.todos.slice();
-    todos.push({id: this.state.nextId, text: todoText});
-    this.setState({
-      todos: todos,
-      nextId: ++this.state.nextId
-    })
-  }
-
-  removeTodo(id) {
-    this.setState({
-      todos: this.state.todos.filter((todo, index) => todo.id != id)
-    })
   }*/
 
   state={
     todos:[],
     id:uuid(),
     item:'',
-    editItem:false
+    editItem:false,
   }
 
   handleChange = (e)=> { //no binding?
@@ -90,6 +76,19 @@ class App extends Component {
     })
   }
 
+  moveItem = (dragIndex, hoverIndex) => {
+    const { todos } = this.state
+    const dragItem = todos[dragIndex]
+
+    this.setState(
+      update(this.state, {
+        todos: {
+          $splice: [[dragIndex, 1], [hoverIndex, 0, dragItem]],
+        },
+      }),
+    )
+  }
+
   render() {
     return (
       <div className="container">
@@ -97,30 +96,12 @@ class App extends Component {
           <div className="col-10 mx-auto col-md-8 mt-4">
             <h3 className="text-capitalize text-center">Todo Input</h3>
             <TodoInput item={this.state.item} handleChange={this.handleChange} addTodo={this.addTodo} editItem={this.state.editItem}/>
-            <TodoList todos={this.state.todos} clearList={this.clearList} handleDelete={this.handleDelete} handleEdit={this.handleEdit}/>
+            <TodoList todos={this.state.todos} clearList={this.clearList} handleDelete={this.handleDelete} handleEdit={this.handleEdit} moveItem={this.moveItem}/>
           </div>
         </div>
       </div>
     );
   }
-
-  /*render() {
-    return (
-      <div className="App">
-        <div className="todo-wrapper">
-          <h2>React Todos</h2>
-          <TodoInput/>
-          <ul>
-            {
-              this.state.todos.map((todo) => {
-                return <TodoItem todo={todo} key={todo.id} id={todo.id} removeTodo={this.removeTodo} />
-              })
-            }
-          </ul>
-        </div>
-      </div>
-    );
-  }*/
 }
 
 export default App;
