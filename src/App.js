@@ -1,13 +1,10 @@
-import React, { Component, useState }from 'react';
+import React, { Component }from 'react';
 import './App.css';
 import TodoInput from './components/todoInput'
 import TodoList from './components/todoList'
-import Card from './components/Card'
 import "bootstrap/dist/css/bootstrap.min.css"
 import uuid from 'uuid'
 import update from 'immutability-helper'
-import HTML5Backend from 'react-dnd-html5-backend'
-import { DndProvider } from 'react-dnd'
 
 class App extends Component {
   /*constructor(props) {
@@ -23,21 +20,6 @@ class App extends Component {
     }
     this.addTodo = this.addTodo.bind(this);
     this.removeTodo = this.removeTodo.bind(this);
-  }
-
-  addTodo(todoText) {
-    let todos = this.state.todos.slice();
-    todos.push({id: this.state.nextId, text: todoText});
-    this.setState({
-      todos: todos,
-      nextId: ++this.state.nextId
-    })
-  }
-
-  removeTodo(id) {
-    this.setState({
-      todos: this.state.todos.filter((todo, index) => todo.id != id)
-    })
   }*/
 
   state={
@@ -45,37 +27,6 @@ class App extends Component {
     id:uuid(),
     item:'',
     editItem:false,
-    cards: [			
-      {
-				id: 1,
-				text: 'Write a cool JS library',
-			},
-			{
-				id: 2,
-				text: 'Make it generic enough',
-			},
-			{
-				id: 3,
-				text: 'Write README',
-			},
-			{
-				id: 4,
-				text: 'Create some examples',
-			},
-			{
-				id: 5,
-				text:
-					'Spam in Twitter and IRC to promote it (note that this element is taller than the others)',
-			},
-			{
-				id: 6,
-				text: '???',
-			},
-			{
-				id: 7,
-				text: 'PROFIT',
-			},
-    ]
   }
 
   handleChange = (e)=> { //no binding?
@@ -125,14 +76,14 @@ class App extends Component {
     })
   }
 
-  moveCard = (dragIndex, hoverIndex) => {
-    const { cards } = this.state
-    const dragCard = cards[dragIndex]
+  moveItem = (dragIndex, hoverIndex) => {
+    const { todos } = this.state
+    const dragItem = todos[dragIndex]
 
     this.setState(
       update(this.state, {
-        cards: {
-          $splice: [[dragIndex, 1], [hoverIndex, 0, dragCard]],
+        todos: {
+          $splice: [[dragIndex, 1], [hoverIndex, 0, dragItem]],
         },
       }),
     )
@@ -145,43 +96,12 @@ class App extends Component {
           <div className="col-10 mx-auto col-md-8 mt-4">
             <h3 className="text-capitalize text-center">Todo Input</h3>
             <TodoInput item={this.state.item} handleChange={this.handleChange} addTodo={this.addTodo} editItem={this.state.editItem}/>
-            <TodoList todos={this.state.todos} clearList={this.clearList} handleDelete={this.handleDelete} handleEdit={this.handleEdit}/>
-            <div className="card-container">
-            <DndProvider backend={HTML5Backend}>
-              {this.state.cards.map((card, i) => (
-                <Card
-                  key={card.id}
-                  index={i}
-                  id={card.id}
-                  text={card.text}
-                  moveCard={this.moveCard}
-                />
-              ))}
-              </DndProvider>
-            </div>
+            <TodoList todos={this.state.todos} clearList={this.clearList} handleDelete={this.handleDelete} handleEdit={this.handleEdit} moveItem={this.moveItem}/>
           </div>
         </div>
       </div>
     );
   }
-
-  /*render() {
-    return (
-      <div className="App">
-        <div className="todo-wrapper">
-          <h2>React Todos</h2>
-          <TodoInput/>
-          <ul>
-            {
-              this.state.todos.map((todo) => {
-                return <TodoItem todo={todo} key={todo.id} id={todo.id} removeTodo={this.removeTodo} />
-              })
-            }
-          </ul>
-        </div>
-      </div>
-    );
-  }*/
 }
 
 export default App;
