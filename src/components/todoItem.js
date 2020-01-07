@@ -76,6 +76,7 @@ class TodoItem extends React.Component {
     /*constructor(props) {
         super(props);
     }
+    <input type="checkbox" className="cbox"></input>
     */
 
     render() {
@@ -89,7 +90,7 @@ class TodoItem extends React.Component {
             connectDropTarget &&
             connectDragSource(
                 connectDropTarget(<li className="list-group-item text-capitalize d-flex justify-content-between my-2" style={{ ...style, opacity }}>
-                <h6>{title}</h6>
+                    <h6>{title}</h6>
                 <div className="todo-icon">
                     <span className="mx-2 text-success" onClick={handleEdit}>
                         <i className="fas fa-pen"></i>
